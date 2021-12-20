@@ -6,3 +6,6 @@ pluginManagement {
 
 rootProject.name = 'spring-reactive'
 
+// modules
+include 'ch-01-spring-reactive'
+

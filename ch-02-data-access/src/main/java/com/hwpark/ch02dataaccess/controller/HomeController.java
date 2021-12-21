@@ -4,12 +4,16 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.reactive.result.view.Rendering;
 
 import com.hwpark.ch02dataaccess.domain.Cart;
+import com.hwpark.ch02dataaccess.domain.CartItem;
 import com.hwpark.ch02dataaccess.domain.Item;
 import com.hwpark.ch02dataaccess.repository.CartRepository;
 import com.hwpark.ch02dataaccess.repository.ItemRepository;
+import com.hwpark.ch02dataaccess.service.CartService;
 
 import reactor.core.publisher.Mono;
 
@@ -21,7 +25,6 @@ import reactor.core.publisher.Mono;
  *          - 이 필터는 기본적으로 활성화 되어 있지 않으며, 다음 설정을 추가해야 활성화된다.
  *              - spring.webflux.hiddenmethod.filter.enable=true
  * </pre>
- *
  */
 @RequiredArgsConstructor
 @Controller
@@ -29,6 +32,8 @@ public class HomeController {
 
     private final ItemRepository itemRepository;
     private final CartRepository cartRepository;
+
+    private final CartService cartService;
 
     @GetMapping
     public Mono<Rendering> home() {
@@ -41,7 +46,12 @@ public class HomeController {
                     .defaultIfEmpty(new Cart("My Cart"))) // 값이 없는 경우 default 값 반환
             .build()
         );
+    }
 
+    @PostMapping(path = "add/{id}")
+    public Mono<String> addToCart(@PathVariable String id) {
+        return cartService.addToCart("My Cart", id)
+            .thenReturn("redirect:/");
     }
 
 }

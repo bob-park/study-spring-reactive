@@ -3,17 +3,20 @@ package com.hwpark.ch02dataaccess.controller;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.result.view.Rendering;
 
 import com.hwpark.ch02dataaccess.domain.Cart;
-import com.hwpark.ch02dataaccess.domain.CartItem;
 import com.hwpark.ch02dataaccess.domain.Item;
 import com.hwpark.ch02dataaccess.repository.CartRepository;
 import com.hwpark.ch02dataaccess.repository.ItemRepository;
 import com.hwpark.ch02dataaccess.service.CartService;
+import com.hwpark.ch02dataaccess.service.InventoryService;
 
 import reactor.core.publisher.Mono;
 
@@ -34,6 +37,7 @@ public class HomeController {
     private final CartRepository cartRepository;
 
     private final CartService cartService;
+    private final InventoryService inventoryService;
 
     @GetMapping
     public Mono<Rendering> home() {
@@ -52,6 +56,32 @@ public class HomeController {
     public Mono<String> addToCart(@PathVariable String id) {
         return cartService.addToCart("My Cart", id)
             .thenReturn("redirect:/");
+    }
+
+    @PostMapping
+    public Mono<String> createItem(@ModelAttribute Item newItem) {
+        return this.itemRepository.save(newItem) //
+            .thenReturn("redirect:/");
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Mono<String> deleteItem(@PathVariable String id) {
+        return this.itemRepository.deleteById(id) //
+            .thenReturn("redirect:/");
+    }
+
+    @GetMapping("/search")
+    public Mono<Rendering> search(
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) String description,
+        @RequestParam boolean useAnd) {
+        return Mono.just(Rendering.view("home")
+            .modelAttribute("items",
+                inventoryService.searchByExample(name, description, useAnd))
+            .modelAttribute("cart",
+                this.cartRepository.findById("My Cart")
+                    .defaultIfEmpty(new Cart("My Cart")))
+            .build());
     }
 
 }

@@ -26,6 +26,11 @@
                 <input type="submit" value="Add to Cart"/>
             </form>
         </td>
+        <td>
+            <form th:method="delete" th:action="@{'/delete/' + ${item.id}}">
+                <input type="submit" value="Delete"/>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -45,7 +50,7 @@
         <tr th:each="cartItem : ${cart.cartItems}">
             <td th:text="${cartItem.item.id}"></td>
             <td th:text="${cartItem.item.name}"></td>
-            <td th:text="${cartItem.item.price}"></td>
+            <td th:text="${cartItem.quantity}"></td>
         </tr>
     </tbody>
 </table>

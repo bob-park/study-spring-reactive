@@ -1,12 +1,15 @@
 package com.hwpark.ch02dataaccess.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.springframework.data.annotation.Id;
 
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Item {
 
     @Id
@@ -14,9 +17,6 @@ public class Item {
 
     private String name;
     private double price;
-
-    private Item() {
-    }
 
     public Item(String name, double price) {
         this.name = name;

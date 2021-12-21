@@ -20,7 +20,7 @@ public class Cart {
 
     private List<CartItem> cartItems;
 
-    public Cart(String id){
+    public Cart(String id) {
         this(id, new ArrayList<>());
     }
 

@@ -1,0 +1,16 @@
+## spring
+spring:
+  webflux:
+    hiddenmethod:
+      filter:
+        enabled: true
+  mongodb:
+    embedded:
+      version: 3.5.5
+
+
+## logging
+logging:
+  level:
+    org.springframework.data: TRACE
+

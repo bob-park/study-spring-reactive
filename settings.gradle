@@ -8,5 +8,5 @@ rootProject.name = 'spring-reactive'
 
 // modules
 include 'ch-01-spring-reactive'
-include 'ch-02-data-access'
+include 'data-access'
 

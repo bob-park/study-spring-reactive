@@ -1,22 +1,29 @@
 package com.hwpark.ch02dataaccess.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
+import com.hwpark.ch02dataaccess.domain.Cart;
+import com.hwpark.ch02dataaccess.domain.CartItem;
 import com.hwpark.ch02dataaccess.domain.Item;
+import com.hwpark.ch02dataaccess.repository.CartRepository;
 import com.hwpark.ch02dataaccess.repository.ItemRepository;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class InventoryService {
 
     private final ItemRepository itemRepository;
+    private final CartRepository cartRepository;
 
     public Flux<Item> searchByExample(String name, String description, boolean useAnd) {
         Item item = new Item(name, description, 0.0);
@@ -36,6 +43,32 @@ public class InventoryService {
 
         return itemRepository.findAll(probe);
 
+    }
+
+    public Mono<Cart> addToCart(String cartId, String id) {
+        return cartRepository.findById(cartId)
+            .log("foundCart")
+            .defaultIfEmpty(new Cart(cartId))
+            .log("emptyCart")
+            .flatMap(cart -> cart.getCartItems().stream()
+                .filter(cartItem -> cartItem.getItem().getId().equals(id)).findAny()
+                .map(cartItem -> {
+                    cartItem.increment();
+                    return Mono.just(cart).log("newCartItem");
+                })
+                .orElseGet(() -> itemRepository.findById(id)
+                    .log("fetchedItem")
+                    .map(CartItem::new)
+                    .log("cartItem")
+                    .map(cartItem -> {
+                        cart.getCartItems().add(cartItem);
+                        return cart;
+                    }))
+                .log("addedCartItem")
+            )
+            .log("cartWithAnotherItem")
+            .flatMap(cartRepository::save)
+            .log("savedCart");
     }
 
 }

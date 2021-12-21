@@ -7,10 +7,13 @@ spring:
   mongodb:
     embedded:
       version: 3.5.5
-
+#  devtools:
+#    restart:
+#      exclude: # 정적자원인 경우 제외시킬 수 있다. - 패턴 사용 가능
 
 ## logging
 logging:
   level:
     org.springframework.data: TRACE
+    web: debug # 부가적인 웹 활동 로깅
 

@@ -62,6 +62,7 @@ class InventoryServiceTest {
     void addItemToEmptyCartShouldProduceOnCartItem() {
 
         inventoryService.addToCart("My Cart", "item1")
+            // StepVerifier 를 사용하면 모든 테스트 케이스에서 onSubscribe 시그널이 발생한다.
             .as(StepVerifier::create)// 메서드 레퍼런스로 연결해서, 테스트 기능을 전담하는 reactor type handler 생성
             .expectNextMatches(cart -> { // 결과 검증
                 assertThat(cart.getCartItems())

@@ -1,6 +1,7 @@
 package com.hwpark.ch02dataaccess.domain;
 
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import org.springframework.data.geo.Point;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Item {
 
@@ -35,6 +37,13 @@ public class Item {
     public Item(String name, String description, double price) {
         this.name = name;
         this.description = description;
+        this.price = price;
+    }
+
+    public Item(String name, String description, String distributorRegion, double price) {
+        this.name = name;
+        this.description = description;
+        this.distributorRegion = distributorRegion;
         this.price = price;
     }
 }

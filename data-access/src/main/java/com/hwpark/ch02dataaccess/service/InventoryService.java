@@ -71,4 +71,20 @@ public class InventoryService {
             .log("savedCart");
     }
 
+    public Mono<Void> removeItem(String id) {
+        return itemRepository.deleteById(id);
+    }
+
+    public Mono<Item> addItem(Item newItem) {
+        return itemRepository.save(newItem);
+    }
+
+    public Flux<Item> getInventory() {
+        return itemRepository.findAll();
+    }
+
+    public Mono<Cart> getCart(String cartId) {
+        return cartRepository.findById(cartId);
+    }
+
 }

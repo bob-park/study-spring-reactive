@@ -13,9 +13,6 @@ import org.springframework.web.reactive.result.view.Rendering;
 
 import com.hwpark.ch02dataaccess.domain.Cart;
 import com.hwpark.ch02dataaccess.domain.Item;
-import com.hwpark.ch02dataaccess.repository.CartRepository;
-import com.hwpark.ch02dataaccess.repository.ItemRepository;
-import com.hwpark.ch02dataaccess.service.CartService;
 import com.hwpark.ch02dataaccess.service.InventoryService;
 
 import reactor.core.publisher.Mono;
@@ -33,10 +30,6 @@ import reactor.core.publisher.Mono;
 @Controller
 public class HomeController {
 
-    private final ItemRepository itemRepository;
-    private final CartRepository cartRepository;
-
-    private final CartService cartService;
     private final InventoryService inventoryService;
 
     @GetMapping
@@ -44,9 +37,9 @@ public class HomeController {
         // Model 를 반환하기 위해 WebFlux Container 인 Rendering 반환
         // ! 단, Reactive Stream 을 Template Engine 이 지원해야 한다.
         return Mono.just(Rendering.view("home") // view 반환
-            .modelAttribute("items", itemRepository.findAll()) // model 반환
+            .modelAttribute("items", inventoryService.getInventory()) // model 반환
             .modelAttribute("cart",
-                cartRepository.findById("My Cart")
+                inventoryService.getCart("My Cart")
                     .defaultIfEmpty(new Cart("My Cart"))) // 값이 없는 경우 default 값 반환
             .build()
         );
@@ -60,13 +53,13 @@ public class HomeController {
 
     @PostMapping
     public Mono<String> createItem(@ModelAttribute Item newItem) {
-        return this.itemRepository.save(newItem) //
+        return inventoryService.addItem(newItem) //
             .thenReturn("redirect:/");
     }
 
     @DeleteMapping("/delete/{id}")
     public Mono<String> deleteItem(@PathVariable String id) {
-        return this.itemRepository.deleteById(id) //
+        return this.inventoryService.removeItem(id) //
             .thenReturn("redirect:/");
     }
 
@@ -79,7 +72,7 @@ public class HomeController {
             .modelAttribute("items",
                 inventoryService.searchByExample(name, description, useAnd))
             .modelAttribute("cart",
-                this.cartRepository.findById("My Cart")
+                inventoryService.getCart("My Cart")
                     .defaultIfEmpty(new Cart("My Cart")))
             .build());
     }

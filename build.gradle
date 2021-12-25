@@ -44,6 +44,7 @@ subprojects {
         testAnnotationProcessor 'org.projectlombok:lombok'
 
         implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
+        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.6.RELEASE'
     }
 
 }

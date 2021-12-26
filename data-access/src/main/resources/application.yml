@@ -11,9 +11,29 @@ spring:
 #    restart:
 #      exclude: # 정적자원인 경우 제외시킬 수 있다. - 패턴 사용 가능
 
+## management
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - loggers
+          - threaddump
+          - heapdump
+          - httptrace
+
 ## logging
 logging:
   level:
     org.springframework.data: TRACE
     web: debug # 부가적인 웹 활동 로깅
 
+## info - 안된다.
+info:
+  project:
+    version: 1.1

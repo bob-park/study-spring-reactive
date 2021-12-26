@@ -3,4 +3,3 @@ dependencies {
     implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     implementation 'org.mongodb:mongodb-driver-sync'
 }
-

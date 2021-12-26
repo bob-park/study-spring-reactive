@@ -12,6 +12,7 @@ buildscript {
             classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
         }
     }
+
 }
 
 allprojects {
@@ -29,7 +30,6 @@ subprojects {
     repositories {
         mavenCentral()
     }
-
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

@@ -5,24 +5,34 @@ buildscript {
     }
     repositories {
         mavenCentral()
+
+        maven {
+            url "https://plugins.gradle.org/m2/"  //gradle 플러그인 URL
+        }
     }
     dependencies {
         dependencies {
             classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
             classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
+            classpath 'gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:2.2.4'
         }
     }
+
 }
+
 
 allprojects {
     ext {
     }
+
+
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: "com.gorylenko.gradle-git-properties"
 
     sourceCompatibility = 11
 
@@ -30,8 +40,8 @@ subprojects {
         mavenCentral()
     }
 
-
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         implementation 'org.springframework.boot:spring-boot-starter-webflux'
         compileOnly 'org.projectlombok:lombok'
@@ -46,5 +56,4 @@ subprojects {
         implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
         testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.6.RELEASE'
     }
-
 }

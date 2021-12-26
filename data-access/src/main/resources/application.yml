@@ -18,6 +18,7 @@ management:
       show-details: always
   endpoints:
     web:
+      base-path: /manage
       exposure:
         include:
           - health

@@ -31,6 +31,13 @@ dependencies {
 
     // rest assured & asciidoc
     testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
+
+    // spring hateoas
+    implementation('org.springframework.boot:spring-boot-starter-hateoas') {
+        // webflux 에서 사용할려면, tomcat 을 내장하고 있는 spring-boot-starter-web 을 제외해야한다.
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
+    }
+
 }
 
 test {

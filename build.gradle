@@ -61,8 +61,8 @@ subprojects {
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
 
-        implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
-        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.6.RELEASE'
+//        implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
+//        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.6.RELEASE'
 
         testImplementation 'org.junit.platform:junit-platform-launcher:1.8.2'
 

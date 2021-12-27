@@ -1,9 +1,45 @@
+plugins {
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
+}
+
 ext {
-    version '1.0.001.1226'
+    snippetsDir = file('build/generated-snippets')
+}
+
+asciidoctor {
+    dependsOn test
+    attributes 'snippets': snippetsDir
+    inputs.dir snippetsDir
+}
+
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs') // 기존 docs 삭제해버리기
+}
+
+bootJar {
+    dependsOn asciidoctor
+    copy {
+        from "${asciidoctor.outputDir}"            // /html5를 사용하지 않는다!
+        into 'src/main/resources/static/docs'    // /static/docs로 복사!
+    }
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
     implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     implementation 'org.mongodb:mongodb-driver-sync'
+
+    // rest assured & asciidoc
+    testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
+
+    // spring hateoas
+    implementation('org.springframework.boot:spring-boot-starter-hateoas') {
+        // webflux 에서 사용할려면, tomcat 을 내장하고 있는 spring-boot-starter-web 을 제외해야한다.
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
+    }
+
+}
+
+test {
+    useJUnitPlatform()
 }

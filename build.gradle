@@ -1,8 +1,10 @@
 buildscript {
+
     ext {
-        springBootVersion = '2.6.1'
+        springBootVersion = '2.6.2'
         dependencyManagementVersion = '1.0.11.RELEASE'
     }
+
     repositories {
         mavenCentral()
 
@@ -10,6 +12,7 @@ buildscript {
             url "https://plugins.gradle.org/m2/"  //gradle 플러그인 URL
         }
     }
+
     dependencies {
         dependencies {
             classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
@@ -25,7 +28,6 @@ allprojects {
     ext {
     }
 
-
 }
 
 subprojects {
@@ -38,6 +40,12 @@ subprojects {
 
     repositories {
         mavenCentral()
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
     }
 
     dependencies {
@@ -53,7 +61,11 @@ subprojects {
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
 
-        implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
-        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.6.RELEASE'
+//        implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
+//        testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.6.RELEASE'
+
+        testImplementation 'org.junit.platform:junit-platform-launcher:1.8.2'
+
     }
+
 }

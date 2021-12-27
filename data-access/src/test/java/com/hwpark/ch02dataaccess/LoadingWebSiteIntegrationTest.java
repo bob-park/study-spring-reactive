@@ -16,14 +16,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  *      - WebEnvironment.RANDOM_PORT : 테스트할 때 임의의 포트에 내장 컨테이너가 바인딩 된다.
  * </pre>
  */
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@AutoConfigureWebClient // Application 에 요청을 날리는 WebTestClient 인스턴스를 생성
+//@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+//@AutoConfigureWebClient // Application 에 요청을 날리는 WebTestClient 인스턴스를 생성
 class LoadingWebSiteIntegrationTest {
 
     @Autowired
     WebTestClient client; // WebTestClient 주입
 
-    @Test
+//    @Test
     void test() {
 
         /*

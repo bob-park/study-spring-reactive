@@ -38,6 +38,12 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
     }
 
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
+    testImplementation 'org.testcontainers:testcontainers-bom:1.16.2'
+    testImplementation 'org.testcontainers:rabbitmq:1.16.2'
+    testImplementation 'org.testcontainers:junit-jupiter:1.16.2'
+
 }
 
 test {

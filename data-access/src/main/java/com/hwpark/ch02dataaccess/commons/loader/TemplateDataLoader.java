@@ -27,8 +27,8 @@ public class TemplateDataLoader {
     @Bean
     public CommandLineRunner initialize(MongoOperations mongo) {
         return args -> {
-            mongo.save(new Item("Alf alarm clock", 19.99));
-            mongo.save(new Item("Smurf TV tray", 24.99));
+            mongo.save(new Item("Alf alarm clock", "nothing impotent", 19.99));
+            mongo.save(new Item("Smurf TV tray", "nothing impotent", 24.99));
         };
     }
 

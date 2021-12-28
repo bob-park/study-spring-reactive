@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.bson.Document;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.actuate.trace.http.HttpTrace;
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
 import org.springframework.context.annotation.Bean;
@@ -85,5 +86,10 @@ public class AppConfiguration {
                     httpTrace.getLong("timeTaken")));
             }
         };
+
+    @Bean
+    public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
 
 }

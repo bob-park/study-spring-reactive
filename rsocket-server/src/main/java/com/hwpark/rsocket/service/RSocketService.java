@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 import com.hwpark.rsocket.domain.Item;
 import com.hwpark.rsocket.repository.ItemRepository;
@@ -14,7 +13,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
 @Slf4j
-@Service
+@Controller // ! Controller 로 하니까 되네
 public class RSocketService {
 
     private final ItemRepository itemRepository;

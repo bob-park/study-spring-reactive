@@ -13,3 +13,4 @@ spring:
 logging:
   level:
     com.hwpark: debug
+    web: debug

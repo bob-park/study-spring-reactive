@@ -1,0 +1,10 @@
+## server
+server:
+  port: 9000
+
+## spring
+spring:
+  rsocket:
+    server:
+      port: 7000
+      transport: tcp

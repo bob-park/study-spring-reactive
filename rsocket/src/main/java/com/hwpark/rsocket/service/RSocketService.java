@@ -1,13 +1,12 @@
-package com.hwpark.ch02dataaccess.service.rsocket;
+package com.hwpark.rsocket.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Service;
 
-import com.hwpark.ch02dataaccess.domain.Item;
-import com.hwpark.ch02dataaccess.repository.ItemRepository;
+import com.hwpark.rsocket.domain.Item;
+import com.hwpark.rsocket.repository.ItemRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

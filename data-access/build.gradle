@@ -29,6 +29,8 @@ dependencies {
     implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     implementation 'org.mongodb:mongodb-driver-sync'
 
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
     // rest assured & asciidoc
     testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
 

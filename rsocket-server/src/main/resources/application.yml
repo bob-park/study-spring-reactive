@@ -1,0 +1,16 @@
+## server
+server:
+  port: 9000
+
+## spring
+spring:
+  rsocket:
+    server:
+      port: 17000 # local 에서 7000 포트를 쓰고있넹 데헷
+      transport: tcp
+
+## logging
+logging:
+  level:
+    com.hwpark: debug
+    web: debug

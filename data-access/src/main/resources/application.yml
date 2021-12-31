@@ -32,11 +32,11 @@ management:
 logging:
   level:
     web: debug # 부가적인 웹 활동 로깅
-    reactor: debug
-    org.springframework:
-      data: TRACE
-      amqp: debug
-      messaging: debug
+#    reactor: debug
+#    org.springframework:
+#      data: TRACE
+#      amqp: debug
+#      messaging: debug
     com.hwpark: debug
 
 

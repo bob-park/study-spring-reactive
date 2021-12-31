@@ -9,4 +9,4 @@ rootProject.name = 'spring-reactive'
 // modules
 include 'ch-01-spring-reactive'
 include 'data-access'
-
+include 'rsocket'

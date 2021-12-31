@@ -1,18 +1,22 @@
 package com.hwpark.rsocketclient.controller;
 
 import java.net.URI;
+import java.time.Duration;
 
 import org.reactivestreams.Publisher;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.messaging.rsocket.RSocketRequester;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hwpark.rsocketclient.domain.Item;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static io.rsocket.metadata.WellKnownMimeType.MESSAGE_RSOCKET_ROUTING;
@@ -46,7 +50,14 @@ public class RSocketController {
             .retrieveMono(Item.class)
             .map(savedItem -> ResponseEntity.created(URI.create("/items/request-response"))
                 .body(savedItem));
+    }
 
+    @GetMapping(path = "items/request-stream", produces = MediaType.APPLICATION_NDJSON_VALUE)
+    public Flux<Item> findItemsUsingRSocketRequestStream() {
+        return rSocketRequester
+            .route("newItems.request-stream")
+            .retrieveFlux(Item.class)
+            .delayElements(Duration.ofSeconds(1));
     }
 
 }

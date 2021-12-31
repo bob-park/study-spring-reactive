@@ -38,7 +38,7 @@ public class RSocketService {
             .doOnNext(itemSink::tryEmitNext);
     }
 
-    @MessageMapping("newItem.fire-and-forget")
+    @MessageMapping("newItems.fire-and-forget")
     public Mono<Void> processNewItemsViaRSocketFireAndForget(Item item) {
         return itemRepository.save(item)
             .doOnNext(itemSink::tryEmitNext)

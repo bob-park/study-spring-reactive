@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hwpark.rsocketclient.domain.Item;
 
+import io.micrometer.core.ipc.http.HttpSender.Response;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -58,6 +59,15 @@ public class RSocketController {
             .route("newItems.request-stream")
             .retrieveFlux(Item.class)
             .delayElements(Duration.ofSeconds(1));
+    }
+
+    @PostMapping(path = "items/fire-and-forget")
+    public Mono<ResponseEntity<?>> addNewItemUsingRSocketFireAndForget(@RequestBody Item item) {
+        return rSocketRequester
+            .route("newItems.fire-and-forget")
+            .data(item)
+            .send()
+            .then(Mono.just(ResponseEntity.created(URI.create("/items/fire-and-forget")).build()));
     }
 
 }

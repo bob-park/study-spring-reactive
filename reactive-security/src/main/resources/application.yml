@@ -1,4 +1,15 @@
 ## spring
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 293569047581-2m3jl3gfqh1trblialgujpi340cllsmo.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - profile
+              - email
 
 ## logging
 logging:

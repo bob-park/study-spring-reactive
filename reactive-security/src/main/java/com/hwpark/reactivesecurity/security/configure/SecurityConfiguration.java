@@ -16,8 +16,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 import com.hwpark.reactivesecurity.repository.UserRepository;
 
-@EnableReactiveMethodSecurity // 메서드 보안 설정 시 반드시 추가해줘야 한다.
-@Configuration
+//@EnableReactiveMethodSecurity // 메서드 보안 설정 시 반드시 추가해줘야 한다.
+//@Configuration
 public class SecurityConfiguration {
 
     public static final String USER = "USER";

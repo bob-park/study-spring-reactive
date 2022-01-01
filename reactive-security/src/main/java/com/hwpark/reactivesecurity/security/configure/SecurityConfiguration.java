@@ -54,7 +54,7 @@ public class SecurityConfiguration {
             operations.save(
                 new com.hwpark.commons.domain.User("manager",
                     passwordEncoder.encode("12345"),
-                    List.of(role(INVENTORY))));
+                    List.of(role(USER), role(INVENTORY))));
         };
     }
 

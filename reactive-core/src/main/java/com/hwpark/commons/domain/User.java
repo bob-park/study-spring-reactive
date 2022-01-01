@@ -1,6 +1,7 @@
 package com.hwpark.commons.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import org.springframework.data.annotation.Id;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class User {
 
     @Id

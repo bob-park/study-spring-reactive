@@ -1,0 +1,7 @@
+## spring
+
+## logging
+logging:
+  level:
+    web: debug
+    com.hwpark: debug

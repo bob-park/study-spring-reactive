@@ -1,9 +1,12 @@
 package com.hwpark.reactivesecurity.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
 import com.hwpark.commons.domain.User;
 
-public interface UserRepository extends CrudRepository<User, String> {
+import reactor.core.publisher.Mono;
 
+public interface UserRepository extends ReactiveMongoRepository<User, String> {
+
+    Mono<User> findByName(String name);
 }

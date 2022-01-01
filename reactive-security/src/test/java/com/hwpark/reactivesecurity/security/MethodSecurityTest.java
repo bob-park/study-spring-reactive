@@ -1,6 +1,5 @@
 package com.hwpark.reactivesecurity.security;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
@@ -21,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebClient
-class SecurityTest {
+class MethodSecurityTest {
 
     @Autowired
     WebTestClient client;
@@ -30,10 +29,14 @@ class SecurityTest {
     ItemRepository itemRepository;
 
     @Test
-    // 테스트 용 가짜 사용자를 테스트에 사용한다.
-    @WithMockUser(username = "alice", roles = {"SOME_OTHER_ROLE"})
+    @WithMockUser(username = "alice", roles = "SOME_OTHER_ROLE")
     void addingInventoryWithoutProperRoleFails() {
-        client.post().uri("/")
+
+        Item item = new Item("iPhone 13 pro", "upgrade", 999.99);
+
+        client.post().uri("/api/items/add")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(toJson(item))
             .exchange()
             .expectStatus().isForbidden();
     }
@@ -44,10 +47,11 @@ class SecurityTest {
 
         Item item = new Item("iPhone 13 pro", "upgrade", 999.99);
 
-        client.post().uri("api/items")
+        client.post().uri("/api/items/add")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(toJson(item))
-            .exchange();
+            .exchange()
+            .expectStatus().isCreated();
 
         itemRepository.findByName("iPhone 13 pro")
             .as(StepVerifier::create)
@@ -58,9 +62,8 @@ class SecurityTest {
                 return true;
             })
             .verifyComplete();
+
     }
-
-
 
     private String toJson(Object obj) {
         Gson gson = new GsonBuilder().create();

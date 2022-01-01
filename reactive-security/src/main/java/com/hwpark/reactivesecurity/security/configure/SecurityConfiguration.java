@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
@@ -16,11 +16,12 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 import com.hwpark.reactivesecurity.repository.UserRepository;
 
+@EnableReactiveMethodSecurity // 메서드 보안 설정 시 반드시 추가해줘야 한다.
 @Configuration
 public class SecurityConfiguration {
 
-    private static final String USER = "USER";
-    private static final String INVENTORY = "INVENTORY";
+    public static final String USER = "USER";
+    public static final String INVENTORY = "INVENTORY";
 
     public static String role(String auth) {
         return "ROLE_" + auth;
@@ -62,8 +63,9 @@ public class SecurityConfiguration {
     public SecurityWebFilterChain myCustomSecurityPolicy(ServerHttpSecurity http) {
         return http
             .authorizeExchange(exchanges -> exchanges
-                .pathMatchers(HttpMethod.POST, "/").hasRole(INVENTORY)
-                .pathMatchers(HttpMethod.DELETE, "/**").hasRole(INVENTORY)
+                // method 보안 정책으로 인한 주석 처리
+//                .pathMatchers(HttpMethod.POST, "/").hasRole(INVENTORY)
+//                .pathMatchers(HttpMethod.DELETE, "/**").hasRole(INVENTORY)
                 .anyExchange().authenticated()
                 .and()
                 .httpBasic()

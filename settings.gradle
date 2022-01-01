@@ -11,4 +11,6 @@ include 'ch-01-spring-reactive'
 include 'data-access'
 include 'rsocket-server'
 include 'rsocket-client'
-include 'reative-security'
+include 'reactive-security'
+include 'reactive-core'
+

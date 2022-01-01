@@ -73,3 +73,9 @@ subprojects {
     }
 
 }
+
+project(':reactive-security') {
+    dependencies {
+        implementation project(':reactive-core')
+    }
+}
